@@ -7,9 +7,9 @@ class CategoryItem extends StatelessWidget {
   String id;
   CategoryItem(this.id,this.title, this.color);
   void selectCategory(BuildContext context){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return CategoryMealScreen(id,title);
-    },));
+    Navigator.of(context).pushNamed(
+     "/categoriesMeal",arguments: {"id": id,"title":title}
+    );
   }
   @override
   Widget build(BuildContext context) {

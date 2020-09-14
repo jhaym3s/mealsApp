@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/categoryMealScreen.dart';
-import 'package:meals_app/categoryScreen.dart';
+import 'file:///C:/Users/jhaym/AndroidStudioProjects/meals_app/lib/screens/categoryMealScreen.dart';
+import 'file:///C:/Users/jhaym/AndroidStudioProjects/meals_app/lib/screens/categoryScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,12 +25,13 @@ class MyApp extends StatelessWidget {
           headline6: TextStyle(
             fontSize: 24.0,
             fontFamily: "RobotoCondensed"
-          )
+          ),
         ),
       ),
-      home: CategoryScreen(),
+      //home:"/" ,//CategoryScreen(),
       routes: {
-        "/categoriesMeal": (context)=>CategoryMealScreen(),
+        "/": (context)=> CategoryScreen(),
+        CategoryMealScreen.routeName: (context)=>CategoryMealScreen(),
       },
     );
   }

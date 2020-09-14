@@ -7,12 +7,13 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Affordability affordability;
   final Complexity complexity;
+
   MealItem(
       {@required this.title,
       @required this.imageUrl,
       @required this.duration,
       @required this.affordability,
-      @required this.complexity});
+      @required this.complexity, });
 
   void selectMeal() {}
   @override
@@ -33,18 +34,26 @@ class MealItem extends StatelessWidget {
                       topRight: Radius.circular(15)),
                   child: Image.network(
                     imageUrl,
-                    width: 400,
+                    width: double.infinity,
                     height: 250,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 26),
-                  softWrap: true,//textDirection: TextDirection.ltr,
-
-                  overflow: TextOverflow.fade,
-                )
+                Positioned(
+                  right: 10,
+                  bottom: 20,
+                  child: Container(
+                    width: 390,
+                    color: Colors.black54,
+                    //padding: EdgeInsets.symmetric(vertical: 5,horizontal: 20),
+                    child: Text(
+                      title,
+                      style: TextStyle(fontSize: 26,color: Colors.white),
+                      softWrap: true, textDirection: TextDirection.rtl,
+                      overflow: TextOverflow.fade,
+                  ),
+                  ),
+                ),
               ],
             )
           ],

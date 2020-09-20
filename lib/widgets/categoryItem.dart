@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/jhaym/AndroidStudioProjects/meals_app/lib/screens/categoryMealScreen.dart';
+import '../screens/categoryMealScreen.dart';
 
 class CategoryItem extends StatelessWidget {
-  String title;
-  Color color;
-  String id;
+  final String title;
+  final Color color;
+ final String id;
   CategoryItem(this.id,this.title, this.color);
   void selectCategory(BuildContext context){
     Navigator.of(context).pushNamed(

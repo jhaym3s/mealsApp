@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/jhaym/AndroidStudioProjects/meals_app/lib/screens/categoryMealScreen.dart';
-import 'file:///C:/Users/jhaym/AndroidStudioProjects/meals_app/lib/screens/categoryScreen.dart';
+import 'package:meals_app/screens/mealDetailScreen.dart';
+import './screens/categoryMealScreen.dart';
+import './screens/categoryScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,6 +33,18 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context)=> CategoryScreen(),
         CategoryMealScreen.routeName: (context)=>CategoryMealScreen(),
+        MealDetailScreen.routeName: (context) => MealDetailScreen(),
+      },
+      //the below route is like the 404 page for flutter
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => CategoryScreen());
+      },
+      // //the below route is reached if you are going to a named route with pushed name and the route is not registered in the main.dart file
+
+       // ignore: missing_return
+       onGenerateRoute: (settings) {
+        print(settings.arguments);
+      //   return MaterialPageRoute(builder: (context) => CategoryScreen());
       },
     );
   }

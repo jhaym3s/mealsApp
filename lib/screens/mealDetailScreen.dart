@@ -15,7 +15,7 @@ class MealDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget StepContainers(Widget child) {
+  Widget stepContainers(Widget child) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white54,
@@ -52,7 +52,7 @@ class MealDetailScreen extends StatelessWidget {
               ),
             ),
             headerTitle(context, "Ingredients"),
-            StepContainers(ListView.builder(
+            stepContainers(ListView.builder(
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
@@ -69,7 +69,7 @@ class MealDetailScreen extends StatelessWidget {
                 },
                 itemCount: selectedMeal.ingredients.length)), //Container
             headerTitle(context, "Steps"),
-            StepContainers(ListView.builder(
+            stepContainers(ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(

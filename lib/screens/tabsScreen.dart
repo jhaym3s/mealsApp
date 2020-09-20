@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/categoryScreen.dart';
+import './favoriteScreen.dart';
+import './categoryScreen.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -17,7 +18,9 @@ class _TabsScreenState extends State<TabsScreen> {
       ]),
       ),
       body: TabBarView(children: [
-        CategoryScreen(),
+        //note that the TabBarView must as much element as the number of 'Tab' in a TabBar
+        
+        CategoryScreen(),FavoritesScreen()
       ]),
 
     ));

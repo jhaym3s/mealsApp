@@ -12,7 +12,7 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(length: 2, child: Scaffold(
       appBar: AppBar(
-        title: Text("Meals app"),bottom: TabBar(tabs: [
+        title: Text("Eti's App"),bottom: TabBar(tabs: [
           Tab(icon: Icon(Icons.category,),text: 'Category',),
         Tab(icon: Icon(Icons.star,),text: 'Favourites',),
       ]),
@@ -26,3 +26,4 @@ class _TabsScreenState extends State<TabsScreen> {
     ));
   }
 }
+//so if you want to implement this guy make it the default widget in the main.dart file

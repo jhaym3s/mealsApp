@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   };
   List<Meal> availableMeals = DUMMY_MEALS;
   List<Meal> favoriteMeals = [];
-  void selectFilter(Map<String,bool> filterData){
+  void setFilter(Map<String,bool> filterData){
 setState(() {
   filters = filterData;
   availableMeals = DUMMY_MEALS.where((meal) {
@@ -42,23 +42,23 @@ setState(() {
     }
     return true;
   }).toList();
-});
+     });
   }
   void toddleFavorites(String mealId){
     final existingIndex = favoriteMeals.indexWhere((meal) => meal.id == mealId);
-    if(existingIndex >= 0)
-     {
+    if(existingIndex >= 0) {
        setState(() {
          favoriteMeals.removeAt(existingIndex);
        });
-     }else{
+     }
+    else{
       setState(() {
         favoriteMeals.add(DUMMY_MEALS.firstWhere((meals) => meals.id== mealId));
       });
     }
   }
-    void isMealFavorite(String mealId){
-    favoriteMeals.any((meal) => meal.id == mealId);
+    bool isMealFavorite(String mealId){
+    return favoriteMeals.any((meal) => meal.id == mealId);
     }
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ setState(() {
         "/": (context)=> TabScreenBottom(favoriteMeals),
         CategoryMealScreen.routeName: (context)=>CategoryMealScreen(availableMeals),
         MealDetailScreen.routeName: (context) => MealDetailScreen(toddleFavorites,isMealFavorite),
-        FilterScreen.routeName: (context)=> FilterScreen(filters,selectFilter),
+        FilterScreen.routeName: (context)=> FilterScreen(filters,setFilter),
       },
       //the below route is like the 404 page for flutter
       onUnknownRoute: (settings) {

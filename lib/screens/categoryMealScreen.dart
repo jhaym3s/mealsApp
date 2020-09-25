@@ -36,7 +36,7 @@ class _CategoryMealScreenState extends State<CategoryMealScreen> {
       displayedMeal = widget.availableMeals
           .where((element) => element.categories.contains(id))
           .toList();
-      loadedInitData == true;
+      loadedInitData = true;
     }
     super.didChangeDependencies();
 

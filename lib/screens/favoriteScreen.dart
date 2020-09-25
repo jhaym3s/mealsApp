@@ -7,16 +7,14 @@ class FavoritesScreen extends StatelessWidget {
   FavoritesScreen(this.favoriteMeals);
   @override
   Widget build(BuildContext context) {
-     if(favoriteMeals.isEmpty){ return Container(
-      child: Center( child: Text("Text"),
-      ),
-     );
+     if(favoriteMeals.isEmpty){
+       return Center( child: Text("You have no favourites,"),
+       );
      }
-     else ListView.builder(
+     else {
+       return ListView.builder(
       itemBuilder: (context, index) {
         return MealItem(
-
-          // I really don't know why removeItem without linking it to an anon function is working
           title: favoriteMeals[index].title,
           imageUrl: favoriteMeals[index].imageUrl,
           duration: favoriteMeals[index].duration,
@@ -24,6 +22,6 @@ class FavoritesScreen extends StatelessWidget {
           complexity: favoriteMeals[index].complexity, id: favoriteMeals[index].id, );
       },
       itemCount: favoriteMeals.length,
-    );
+    );}
   }
 }

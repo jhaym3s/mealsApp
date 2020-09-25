@@ -5,6 +5,10 @@ import '../dummyData.dart';
 
 class MealDetailScreen extends StatelessWidget {
   static const routeName = "/mealDetails";
+  final Function toggleFavorites;
+  final Function isMealFavorite;
+  MealDetailScreen(this.toggleFavorites,this.isMealFavorite);
+  //this is a customMade widget
   Widget headerTitle(BuildContext context, String text) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -14,7 +18,6 @@ class MealDetailScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget stepContainers(Widget child) {
     return Container(
       decoration: BoxDecoration(
@@ -55,8 +58,8 @@ class MealDetailScreen extends StatelessWidget {
             stepContainers(ListView.builder(
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 0.5, horizontal: 6),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 0.5, horizontal: 6),
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -69,27 +72,32 @@ class MealDetailScreen extends StatelessWidget {
                 },
                 itemCount: selectedMeal.ingredients.length)), //Container
             headerTitle(context, "Steps"),
-            stepContainers(ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text(
-                      "${index + 1}",
-                      style: TextStyle(color: Colors.black),
+            stepContainers(
+              ListView.builder(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      child: Text(
+                        "${index + 1}",
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
-                  ),
-                  title: Text(selectedMeal.steps[index]),
-                );
-              },itemCount: selectedMeal.steps.length,
+                    title: Text(selectedMeal.steps[index]),
+                  );
+                },
+                itemCount: selectedMeal.steps.length,
+              ),
             ),
+            SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20,)
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.of(context).pop();
-      }, child: Icon(Icons.delete),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: ()=>toggleFavorites(id),
+        child: Icon(isMealFavorite(id)? Icons.star: Icons.star_border),
+      ),
     );
   }
 }

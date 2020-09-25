@@ -3,21 +3,53 @@ import '../dummyData.dart';
 import '../widgets/mealsItem.dart';
 import '../models/meal.dart';
 
-class CategoryMealScreen extends StatelessWidget {
+class CategoryMealScreen extends StatefulWidget {
   static const routeName = "/categoryMeals";
-  // final String id;
-  // final String title;
-  // CategoryMealScreen(this.id,this.title);
+    final List<Meal> availableMeals;
+    CategoryMealScreen(this.availableMeals);
+  @override
+  _CategoryMealScreenState createState() => _CategoryMealScreenState();
+}
+
+class _CategoryMealScreenState extends State<CategoryMealScreen> {
+  String title;
+  Color color;
+  //String id;
+  List<Meal> displayedMeal;
+    bool loadedInitData= false;
+  @override
+  void initState() {
+
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    if (!loadedInitData) {
+      final routesArguments =
+      ModalRoute
+          .of(context)
+          .settings
+          .arguments as Map<Object, Object>;
+      title = routesArguments["title"];
+      final id = routesArguments["id"];
+      color = routesArguments["color"];
+      displayedMeal = widget.availableMeals
+          .where((element) => element.categories.contains(id))
+          .toList();
+      loadedInitData == true;
+    }
+    super.didChangeDependencies();
+
+  }
+  void removeItem(String mealId){
+    setState(() {
+      displayedMeal.removeWhere((element) => element.id== mealId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final routesArguments =
-        ModalRoute.of(context).settings.arguments as Map<Object, Object>;
-    final title = routesArguments["title"];
-    final id = routesArguments["id"];
-    final color = routesArguments["color"];
-    final categoryMeal = DUMMY_MEALS
-        .where((element) => element.categories.contains(id))
-        .toList();
+
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
@@ -26,13 +58,15 @@ class CategoryMealScreen extends StatelessWidget {
         body: ListView.builder(
           itemBuilder: (context, index) {
             return MealItem(
-                title: categoryMeal[index].title,
-                imageUrl: categoryMeal[index].imageUrl,
-                duration: categoryMeal[index].duration,
-                affordability:categoryMeal[index].affordability,
-                complexity: categoryMeal[index].complexity, id: categoryMeal[index].id, );
+
+                // I really don't know why removeItem without linking it to an anon function is working
+                title: displayedMeal[index].title,
+                imageUrl: displayedMeal[index].imageUrl,
+                duration: displayedMeal[index].duration,
+                affordability:displayedMeal[index].affordability,
+                complexity: displayedMeal[index].complexity, id: displayedMeal[index].id, );
           },
-          itemCount: categoryMeal.length,
+          itemCount: displayedMeal.length,
         ));
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/bottomTabScreen.dart';
-import 'package:meals_app/screens/filterscreen.dart';
-import 'package:meals_app/screens/mealDetailScreen.dart';
+import './dummyData.dart';
+import './models/meal.dart';
+import './screens/bottomTabScreen.dart';
+import './screens/filterscreen.dart';
+import './screens/mealDetailScreen.dart';
 import './screens/categoryMealScreen.dart';
 import './screens/categoryScreen.dart';
 
@@ -9,8 +11,55 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String,bool> filters = {
+    "gluten": false,
+    "lactose": false,
+    "vegetarian": false,
+    "vegan": false,
+  };
+  List<Meal> availableMeals = DUMMY_MEALS;
+  List<Meal> favoriteMeals = [];
+  void selectFilter(Map<String,bool> filterData){
+setState(() {
+  filters = filterData;
+  availableMeals = DUMMY_MEALS.where((meal) {
+    if(filters["gluten"]&& !meal.isGlutenFree){
+      return false;
+    }
+    if(filters["lactose"]&& !meal.isLactoseFree){
+      return false;
+    }if(filters["vegan"]&& !meal.isVegan){
+      return false;
+    }if(filters["vegetarian"]&& !meal.isVegetarian){
+      return false;
+    }
+    return true;
+  }).toList();
+});
+  }
+  void toddleFavorites(String mealId){
+    final existingIndex = favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if(existingIndex >= 0)
+     {
+       setState(() {
+         favoriteMeals.removeAt(existingIndex);
+       });
+     }else{
+      setState(() {
+        favoriteMeals.add(DUMMY_MEALS.firstWhere((meals) => meals.id== mealId));
+      });
+    }
+  }
+    void isMealFavorite(String mealId){
+    favoriteMeals.any((meal) => meal.id == mealId);
+    }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,10 +82,10 @@ class MyApp extends StatelessWidget {
       ),
       //home:"/" ,//CategoryScreen(),
       routes: {
-        "/": (context)=> TabScreenBottom(),
-        CategoryMealScreen.routeName: (context)=>CategoryMealScreen(),
-        MealDetailScreen.routeName: (context) => MealDetailScreen(),
-        FilterScreen.routeName: (context)=> FilterScreen(),
+        "/": (context)=> TabScreenBottom(favoriteMeals),
+        CategoryMealScreen.routeName: (context)=>CategoryMealScreen(availableMeals),
+        MealDetailScreen.routeName: (context) => MealDetailScreen(toddleFavorites,isMealFavorite),
+        FilterScreen.routeName: (context)=> FilterScreen(filters,selectFilter),
       },
       //the below route is like the 404 page for flutter
       onUnknownRoute: (settings) {

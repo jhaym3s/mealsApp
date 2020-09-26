@@ -26,12 +26,13 @@ class _TabScreenBottomState extends State<TabScreenBottom> {
     {
       "pages": CategoryScreen(),
       "title": "Category",
-      "actions": Drawer(
-        child: Text("this is another one"),
-      )
+      "drawer": MainDrawer(),
+      "action":
+        IconButton(icon: Icon(Icons.search), onPressed: (){}),
       //how to add actions to a tap bar
     },
-    {"pages": FavoritesScreen(widget.favorites), "title": "Your Favourite"}
+    {"pages": FavoritesScreen(widget.favorites), "title": "Your Favourite",
+      "action": IconButton(icon: Icon(Icons.search), onPressed: (){}),"drawer":MainDrawer()}
   ];
     super.initState();
   }
@@ -62,11 +63,12 @@ class _TabScreenBottomState extends State<TabScreenBottom> {
         type: BottomNavigationBarType.shifting,
       ),
       //drawer: pages[selectedPageIndex]["actions"],
-      drawer: MainDrawer(),
+      drawer: pages[selectedPageIndex]["drawer"],
       appBar: AppBar(
         title: Text(pages[selectedPageIndex]["title"]),
-        //  actions: [pages[selectedPageIndex]["actions"]],
-        // so this is not working
+        actions: [
+          pages[selectedPageIndex]["action"]
+        ],
       ),
       body: pages[selectedPageIndex]["pages"],
     );

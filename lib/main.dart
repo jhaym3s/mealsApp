@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
     "vegan": false,
   };
   List<Meal> availableMeals = DUMMY_MEALS;
-  List<Meal> favoriteMeals = [];
+
   void setFilter(Map<String,bool> filterData){
 setState(() {
   filters = filterData;
@@ -44,9 +44,10 @@ setState(() {
   }).toList();
      });
   }
+  List<Meal> favoriteMeals = [];
   void toddleFavorites(String mealId){
     final existingIndex = favoriteMeals.indexWhere((meal) => meal.id == mealId);
-    if(existingIndex >= 0) {
+    if(existingIndex > -1) {
        setState(() {
          favoriteMeals.removeAt(existingIndex);
        });
@@ -57,6 +58,7 @@ setState(() {
       });
     }
   }
+  //this is for setting the icon if it a favourite or not
     bool isMealFavorite(String mealId){
     return favoriteMeals.any((meal) => meal.id == mealId);
     }
